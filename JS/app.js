@@ -63,7 +63,7 @@ async function getSongs(folder) {
     songUL.innerHTML =
       songUL.innerHTML +
       ` <li>
-   <img src="music.svg" alt="Music-icon" class="invert">
+   <img src="img/music.svg" alt="Music-icon" class="invert">
    <div class="info">
        <div>  ${song.replaceAll("%20", " ")}</div>
        <div>Song Artist</div>
@@ -71,7 +71,7 @@ async function getSongs(folder) {
 
    <div class="playnow">
        <span>Play Now</span>
-       <img src="play.svg" alt="Play" class="invert">
+       <img src="img/play.svg" alt="Play" class="invert">
    </div>
 </li> `;
   }
@@ -90,6 +90,7 @@ async function getSongs(folder) {
       playMusic(
         element.querySelector(".info").firstElementChild.innerHTML.trim()
       );
+      play.src = "img/pause.svg";
     });
   });
 }
@@ -101,9 +102,9 @@ const playMusic = (track, pause = false) => {
     currentSong.play();
   }
 
-  play.src = "pause.svg";
+  play.src = "img/pause.svg";
   if ((pause = true)) {
-    play.src = "play.svg";
+    play.src = "img/play.svg";
   }
 
   songName.innerHTML = currentSong.src
@@ -133,7 +134,7 @@ async function displayAlbum() {
       );
       // Getting there text value or the html code through response that returns a promise
       let response = await a.json();
-      console.log(response);
+      // console.log(response);
       cardContainer.innerHTML =
         cardContainer.innerHTML +
         `<div class="card " data-folder="${folderName}">
@@ -156,6 +157,8 @@ async function displayAlbum() {
         e.addEventListener("click", async (item) => {
           // console.log(item,item.currentTarget.dataset);
           await getSongs(`songs/${item.currentTarget.dataset.folder}`);
+          playMusic(songs[0]);
+          play.src = "img/pause.svg";
         });
       });
     }
@@ -175,10 +178,10 @@ async function main() {
   play.addEventListener("click", () => {
     if (currentSong.paused) {
       currentSong.play();
-      play.src = "pause.svg";
+      play.src = "img/pause.svg";
     } else {
       currentSong.pause();
-      play.src = "play.svg";
+      play.src = "img/play.svg";
     }
     // play.classList.toggle("playPause");
   });
@@ -248,7 +251,7 @@ async function main() {
   let next = document.querySelector("#next");
   next.addEventListener("click", () => {
     currentSong.pause();
-    play.src = "pause.svg";
+    play.src = "img/pause.svg";
     console.log("next was clicked");
     // console.log(currentSong.src);
 
@@ -271,10 +274,10 @@ async function main() {
     currentSong.volume = parseInt(e.target.value) / 100;
 
     if (currentSong.volume == 0) {
-      volLabel.querySelector("img").src = "mute.svg";
+      volLabel.querySelector("img").src = "img/mute.svg";
       console.log(volLabel.querySelector("img").src);
     } else {
-      volLabel.querySelector("img").src = "volume.svg";
+      volLabel.querySelector("img").src = "img/volume.svg";
     }
   });
 
@@ -291,17 +294,17 @@ async function main() {
   let songVolume = Array.from(
     document.querySelector(".songVolume").getElementsByTagName("img")
   );
-  console.log(songVolume);
+  // console.log(songVolume);
   songVolume[0].addEventListener("click", (e) => {
     console.log(e.target);
-    if (e.target.src.includes("volume.svg")) {
-      e.target.src = e.target.src.replace("volume.svg", "mute.svg");
+    if (e.target.src.includes("img/volume.svg")) {
+      e.target.src = e.target.src.replace("img/volume.svg", "img/mute.svg");
       currentSong.volume = 0;
       let volume = (document
         .querySelector(".songVolume")
         .getElementsByTagName("input")[0].value = 0);
     } else {
-      e.target.src = e.target.src.replace("mute.svg", "volume.svg");
+      e.target.src = e.target.src.replace("img/mute.svg", "img/volume.svg");
       currentSong.volume = 0.2;
       let volume = (document
         .querySelector(".songVolume")
