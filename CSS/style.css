@@ -386,6 +386,7 @@ body {
   }
 
   .cardContainer {
+    height: 50vh;
     display: flex;
     /* padding: 0 auto;
      */
